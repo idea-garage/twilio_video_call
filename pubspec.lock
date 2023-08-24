@@ -637,7 +637,7 @@ packages:
   twilio_programmable_video:
     dependency: "direct main"
     description:
-      path: "../plugins/programmable_video"
+      path: "plugins/programmable_video"
       relative: true
     source: path
     version: "1.1.1"
@@ -652,7 +652,7 @@ packages:
   twilio_programmable_video_web:
     dependency: "direct main"
     description:
-      path: "../plugins/programmable_video_web"
+      path: "plugins/programmable_video_web"
       relative: true
     source: path
     version: "1.1.0"
