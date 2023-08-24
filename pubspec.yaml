@@ -51,9 +51,11 @@ dependencies:
   sqflite: 2.2.6
   timeago: 3.2.2
   twilio_programmable_video:
-    path: ./plugins/programmable_video
+    git:
+        url: https://github.com/idea-garage/programmable_video
   twilio_programmable_video_web:
-    path: ./plugins/programmable_video_web
+    git:
+        url: https://github.com/idea-garage/programmable_video_web
   
   permission_handler: ^10.4.3
   url_launcher: 6.1.10
