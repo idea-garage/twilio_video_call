@@ -15,7 +15,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/foundation.dart';
 
 // Twilioのビデオ通話のためのウィジェットを表すクラスを作成
-class TwilioVideoCallWidget extends StatefulWidget {
+class TwilioVideoCallWidget2 extends StatefulWidget {
   // ウィジェットのプロパティを定義
   final double? width;
   final double? height;
@@ -23,7 +23,7 @@ class TwilioVideoCallWidget extends StatefulWidget {
   final String accessToken;
 
   //コンストラクタ
-  const TwilioVideoCallWidget({
+  const TwilioVideoCallWidget2({
     Key? key,
     this.width,
     this.height,
@@ -33,10 +33,10 @@ class TwilioVideoCallWidget extends StatefulWidget {
 
   // ウィジェットのステートを作成
   @override
-  _TwilioVideoCallWidgetState createState() => _TwilioVideoCallWidgetState();
+  _TwilioVideoCallWidget2State createState() => _TwilioVideoCallWidget2State();
 }
 
-class _TwilioVideoCallWidgetState extends State<TwilioVideoCallWidget> {
+class _TwilioVideoCallWidget2State extends State<TwilioVideoCallWidget2> {
   // ビデオ通話のセッションやトラック、参加者などを管理するためのプライベート変数を定義
   Room? _room;
   final Completer<Room> _completer = Completer<Room>();

@@ -1,4 +1,4 @@
-package com.ideagarage.p2psample
+package com.ideagarage.twiliovideocall
 
 import io.flutter.embedding.android.FlutterActivity
 

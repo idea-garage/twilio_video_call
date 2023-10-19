@@ -42,7 +42,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -50,7 +52,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
           title: Text(
-            'Twilio VideoCall',
+            'P2P',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Outfit',
                   color: Colors.white,
@@ -128,62 +130,127 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           ),
                         ),
                       ),
-                      FFButtonWidget(
-                        onPressed: () async {
-                          _model.response1 = await TwilioGetTokenCall.call(
-                            roomName: _model.roomNameController.text,
-                          );
-                          if ((_model.response1?.succeeded ?? true)) {
-                            setState(() {
-                              FFAppState().roomName =
-                                  _model.roomNameController.text;
-                              FFAppState().accessToken =
-                                  TwilioGetTokenCall.token(
-                                (_model.response1?.jsonBody ?? ''),
-                              ).toString();
-                            });
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          FFButtonWidget(
+                            onPressed: () async {
+                              _model.response1 = await TwilioGetTokenCall.call(
+                                roomName: _model.roomNameController.text,
+                              );
+                              if ((_model.response1?.succeeded ?? true)) {
+                                setState(() {
+                                  FFAppState().roomName =
+                                      _model.roomNameController.text;
+                                  FFAppState().accessToken =
+                                      TwilioGetTokenCall.token(
+                                    (_model.response1?.jsonBody ?? ''),
+                                  ).toString();
+                                });
 
-                            context.pushNamed('Room');
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'API Call Failed',
-                                  style: TextStyle(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                context.pushNamed('VideoRoom');
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'API Call Failed',
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                      ),
+                                    ),
+                                    duration: Duration(milliseconds: 4000),
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context).secondary,
                                   ),
-                                ),
-                                duration: Duration(milliseconds: 4000),
-                                backgroundColor:
-                                    FlutterFlowTheme.of(context).secondary,
-                              ),
-                            );
-                          }
+                                );
+                              }
 
-                          setState(() {});
-                        },
-                        text: '入　室',
-                        options: FFButtonOptions(
-                          width: 150.0,
-                          height: 40.0,
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primary,
-                          textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
+                              setState(() {});
+                            },
+                            text: 'ビデオ通話',
+                            options: FFButtonOptions(
+                              width: 150.0,
+                              height: 40.0,
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: FlutterFlowTheme.of(context).primary,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
                                     fontFamily: 'Readex Pro',
                                     color: Colors.white,
                                   ),
-                          elevation: 3.0,
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
+                              elevation: 3.0,
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
+                          FFButtonWidget(
+                            onPressed: () async {
+                              _model.response2 = await TwilioGetTokenCall.call(
+                                roomName: _model.roomNameController.text,
+                              );
+                              if ((_model.response2?.succeeded ?? true)) {
+                                setState(() {
+                                  FFAppState().roomName =
+                                      _model.roomNameController.text;
+                                  FFAppState().accessToken =
+                                      TwilioGetTokenCall.token(
+                                    (_model.response2?.jsonBody ?? ''),
+                                  ).toString();
+                                });
+
+                                context.pushNamed('VoiceRoom');
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'API Call Failed',
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                      ),
+                                    ),
+                                    duration: Duration(milliseconds: 4000),
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context).secondary,
+                                  ),
+                                );
+                              }
+
+                              setState(() {});
+                            },
+                            text: '音声通話',
+                            options: FFButtonOptions(
+                              width: 150.0,
+                              height: 40.0,
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: FlutterFlowTheme.of(context).primary,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Colors.white,
+                                  ),
+                              elevation: 3.0,
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        ],
                       ),
                     ].divide(SizedBox(height: 8.0)),
                   ),
